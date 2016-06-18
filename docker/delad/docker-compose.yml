@@ -1,0 +1,16 @@
+mysql:
+  build: ./mysql/
+  environment:
+    MYSQL_DATABASE: localhost
+    MYSQL_USER: root
+    MYSQL_PASSWORD: root
+    MYSQL_ROOT_PASSWORD: superroot
+  ports:
+    - 3306:3306
+wildfly:
+  build: ./wildfly/
+  links:
+    - mysql:mysql
+  ports:
+    - 8080:8080
+    - 9990:9990

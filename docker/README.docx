@@ -1,0 +1,14 @@
+=== Skapa wildfly konto ===
+http://bgasparotto.com/add-user-wildfly/
+
+=== Komma igång ===
+1. Stå i mappen docker
+2. Skriv vagrant up. Den kommer skapa en testmiljö som är skräddarsydd efter våra behov.
+3. Skriv vagrant ssh, lösenordet: vagrant. För att komma in i testmiljön.
+4. När du väl är inne i testmiljön skriv docker-compose up -d. Det kommer då skapas en container med wildfly och mysql.
+
+=== Docker kommandon ===
+docker ps - För att se namn och id på container som lever.
+docker ps -a - för att se alla container, levande och döda.
+docker exec -i -t [containerId] bash - för att gå in i en container.
+docker start - för att starta en container.

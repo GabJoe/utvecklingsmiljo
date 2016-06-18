@@ -1,0 +1,56 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+
+
+Vagrant.configure(2) do |config|
+	config.vm.provision "docker"
+
+	config.vm.provision "shell", inline:
+		"ps aux | grep 'sshd:' | awk '{print $2}' | xargs kill"
+
+	config.vm.define "docker-host"
+
+	config.vm.box = "ubuntu/trusty64"
+
+	config.vm.network "forwarded_port", guest: 8080, host: 8080
+	config.vm.network "forwarded_port", guest: 49161, host: 49161
+	config.vm.network "forwarded_port", guest: 9990, host: 9990
+
+	 config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
+
+	config.vm.synced_folder "delad/", "/home/vagrant"
+
+	config.vm.provider :virtualbox do |vb|
+   		vb.name = "docker"
+      	vb.memory = 3500
+        vb.cpus = 2
+		vb.gui = true
+		#Osäker om det här löser något just nu.. behövde det innan.
+		vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+   	end
+
+
+
+
+	config.vm.provision "shell", inline:<<-SHELL
+		
+		wget -qO- https://get.docker.com/ | sh
+		sudo usermod -aG docker $(whoami)
+		sudo apt-get -y install python-pip
+		sudo pip install docker-compose
+		mkdir project
+
+
+				
+	SHELL
+
+
+
+end
+
