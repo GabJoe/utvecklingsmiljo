@@ -13,3 +13,6 @@ hs_err_pid*
 
 # vagrant
 *.vagrant
+
+#bash historik
+docker/delad/.bash_history
